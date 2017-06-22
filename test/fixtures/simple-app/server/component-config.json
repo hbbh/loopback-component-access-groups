@@ -9,7 +9,7 @@
     "roleModel": "Role",
     "groupAccessModel": "Team",
     "groupModel": "Store",
-    "foreignKey": "storeId",
+    "groupKey": "storeId",
     "userKey": "boarderId",
     "groupRoles": [
       "$group:admin",
