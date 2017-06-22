@@ -10,6 +10,7 @@
     "groupAccessModel": "Team",
     "groupModel": "Store",
     "foreignKey": "storeId",
+    "userKey": "boarderId",
     "groupRoles": [
       "$group:admin",
       "$group:manager",
