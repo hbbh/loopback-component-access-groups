@@ -578,6 +578,26 @@ describe('REST API', function() {
                 })
                 .expect(401))
           })
+          it('should not create a teams invoice with id prop', function() {
+            return logInAs(user.username)
+              .then(res => json('put', `/api/invoices?access_token=${res.body.id}`)
+                .send({
+                  id: 11234,
+                  storeId: 'A',
+                  invoiceNumber: 11234,
+                })
+                .expect(401))
+          })
+          it('should not create another teams invoice with id prop', function() {
+            return logInAs(user.username)
+              .then(res => json('put', `/api/invoices?access_token=${res.body.id}`)
+                .send({
+                  id: 21234,
+                  storeId: 'B',
+                  invoiceNumber: 21234,
+                })
+                .expect(401))
+          })
         }
         it('should not update another teams invoice', function() {
           return logInAs(user.username)
@@ -598,16 +618,6 @@ describe('REST API', function() {
                 storeId: 'A',
                 invoiceNumber: 2,
                 someprop: 'someval',
-              })
-              .expect(401))
-        })
-        it('should not create another teams invoice with id prop', function() {
-          return logInAs(user.username)
-            .then(res => json('put', `/api/invoices?access_token=${res.body.id}`)
-              .send({
-                id: 2123,
-                storeId: 'B',
-                invoiceNumber: 2123,
               })
               .expect(401))
         })
