@@ -504,12 +504,26 @@ describe('REST API', function() {
                 .send({ storeId: 'A', name: 'A invoice' })
                 .expect(401))
           })
+
+          it('should not create a teams invoice with id props', function() {
+            return logInAs(user.username)
+              .then(res => json('post', `/api/invoices?access_token=${res.body.id}`)
+                .send({ storeId: 'A', name: 'A invoice', invoiceNumber: 123, id: 123 })
+                .expect(401))
+          })
         }
 
         it('should not create another teams invoice', function() {
           return logInAs(user.username)
             .then(res => json('post', `/api/invoices?access_token=${res.body.id}`)
               .send({ storeId: 'B', name: 'A invoice' })
+              .expect(401))
+        })
+
+        it('should not create another teams invoice with id props', function() {
+          return logInAs(user.username)
+            .then(res => json('post', `/api/invoices?access_token=${res.body.id}`)
+              .send({ storeId: 'B', name: 'A invoice', invoiceNumber: 223, id: 223 })
               .expect(401))
         })
 
@@ -584,6 +598,16 @@ describe('REST API', function() {
                 storeId: 'A',
                 invoiceNumber: 2,
                 someprop: 'someval',
+              })
+              .expect(401))
+        })
+        it('should not create another teams invoice with id prop', function() {
+          return logInAs(user.username)
+            .then(res => json('put', `/api/invoices?access_token=${res.body.id}`)
+              .send({
+                id: 2123,
+                storeId: 'B',
+                invoiceNumber: 2123,
               })
               .expect(401))
         })
